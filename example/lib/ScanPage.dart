@@ -1,15 +1,3 @@
-# flash_scan_plugin
-
-### Android手机支持扫描头监听
-
-## Getting Started
-
-
-# 调用方式
-
-方式一：Widget 继承 FlashScanMixin
-
-```dart
 import 'package:flutter/material.dart';
 import 'package:flash_scan_plugin/flash_scan_mixin.dart';
 
@@ -45,16 +33,3 @@ class _ScanPageState extends State<ScanPage> with FlashScanMixin {
     });
   }
 }
-
-```
-
-方式二：使用EventChannelFlashScanPlugin
-```dart
-import 'flash_scan_plugin_event_channel.dart';
-
-EventChannelFlashScanPlugin().listen((value) {
-  // value 扫描结果
-});
-
-EventChannelFlashScanPlugin().cancel();
-```
