@@ -18,6 +18,9 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
 /** FlashScanPlugin */
+const val RES_ACTION = "android.intent.action.SCANRESULT"
+const val RES_ACTION01 = "com.android.server.scannerservice.broadcast"
+val intentsMap: Map<String, String> = mapOf(RES_ACTION to "value", RES_ACTION01 to "scannerdata")
 class FlashScanPlugin: FlutterPlugin, MethodCallHandler {
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
@@ -30,13 +33,6 @@ class FlashScanPlugin: FlutterPlugin, MethodCallHandler {
 
   private val METHOD_CHANNEL = "flash_scan_plugin"
   private val EVENT_CHANNEL = "flash_scan_plugin_event"
-
-  companion object {
-    const val RES_ACTION = "android.intent.action.SCANRESULT"
-    const val RES_ACTION01 = "com.android.server.scannersevice.broadcast"
-  }
-
-
 
   override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     filter = IntentFilter()
@@ -91,7 +87,8 @@ class ScanBroadcastReceiver(): BroadcastReceiver() {
   var events: EventChannel.EventSink? = null
 
   override fun onReceive(context: Context?, intent: Intent?) {
-    val scanResult = intent?.getStringExtra("value") ?: return
+    val contenKey: String = intentsMap[intent?.action ?: ""] ?: ""
+    val scanResult = intent?.getStringExtra(contenKey) ?: return
     print("scanResult ---------------------!")
     /* 如果条码长度>0，解码成功。如果条码长度等于0解码失败。*/
     if (scanResult.isNotEmpty()) {
