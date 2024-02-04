@@ -1,6 +1,6 @@
 name: flash_scan_plugin
 description: flash_scan_plugin for Android.
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/MeiYuLong/flash_scan_plugin.git
 
 environment:
